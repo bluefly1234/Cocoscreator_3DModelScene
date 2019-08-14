@@ -4,7 +4,7 @@
   "_objFlags": 0,
   "_native": "",
   "_effectAsset": {
-    "__uuid__": "abc2cb62-7852-4525-a90d-d474487b88f2"
+    "__uuid__": "6d91e591-4ce0-465c-809f-610ec95019c6"
   },
   "_defines": {
     "USE_DIFFUSE_TEXTURE": true,
@@ -16,9 +16,6 @@
       "__type__": "cc.Vec2",
       "x": 7,
       "y": 7
-    },
-    "normalTexture": {
-      "__uuid__": "9fd54ff7-6b9b-48e7-9dc1-329f1bd700e5"
     },
     "diffuseTexture": {
       "__uuid__": "9fd54ff7-6b9b-48e7-9dc1-329f1bd700e5"

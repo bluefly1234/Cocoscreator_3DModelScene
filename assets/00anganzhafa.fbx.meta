@@ -136,7 +136,7 @@
     "anganzhafa.mtl": {
       "ver": "1.0.2",
       "uuid": "56247ea5-c145-4eac-91d6-8e9de7dc23e5",
-      "dataAsSubAsset": null,
+      "dataAsSubAsset": "{\n  \"__type__\": \"cc.Material\",\n  \"_name\": \"\",\n  \"_objFlags\": 0,\n  \"_native\": \"\",\n  \"_effectAsset\": {\n    \"__uuid__\": \"abc2cb62-7852-4525-a90d-d474487b88f2\"\n  },\n  \"_defines\": {},\n  \"_props\": {}\n}",
       "name": "anganzhafa.mtl",
       "subMetas": {}
     }
