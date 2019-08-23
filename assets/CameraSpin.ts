@@ -104,6 +104,8 @@ export default class NewClass extends cc.Component {
         //Touch的事件示例
         this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
         this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.off(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
+        this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
     }
 
     /**重置摄像机的点位 */
@@ -122,7 +124,6 @@ export default class NewClass extends cc.Component {
         this.cameraNode.getRotation(this.rotation);
     }
 
-
     onTouchStart(event: cc.Event.EventTouch) {
         var arr: cc.Event.EventTouch[] = event.getTouches();
 
@@ -133,6 +134,7 @@ export default class NewClass extends cc.Component {
         else if (arr.length == 2) {
             console.log("onTouchStart 2");
             this.curTouchCount = 2;
+
         }
     }
 
@@ -152,6 +154,18 @@ export default class NewClass extends cc.Component {
         }
     }
 
+    onTouchEnd(event: cc.Event.EventTouch) {
+        if (this.isTiaoJie == true) {
+            this.SetPoint(this.targetPos);
+        }
+    }
+    onTouchCancel(event: cc.Event.EventTouch) {
+        if (this.isTiaoJie == true) {
+            this.SetPoint(this.targetPos);
+        }
+    }
+
+
     /**处理双指触控 */
     onTouchTwo(event: cc.Event.EventTouch): void {
         var arr: cc.Event.EventTouch[] = event.getTouches();
@@ -162,10 +176,28 @@ export default class NewClass extends cc.Component {
 
         var oldDistance = arr[1].getPreviousLocation().sub(arr[0].getPreviousLocation()).mag();
         var newDistance = arr[1].getLocation().sub(arr[0].getLocation()).mag();
-
         var offset = newDistance - oldDistance;
-        var scaleFactor = offset / 100;
-        this.processToFarAndNear(scaleFactor);
+
+        var touch0Distance = arr[0].getPreviousLocation().sub(arr[0].getLocation()).mag();
+        var touch1Distance = arr[1].getPreviousLocation().sub(arr[1].getLocation()).mag();
+
+        this.HorVerMoveByTouch(arr);
+        this.processToFarAndNear(offset / 100);
+    }
+
+    /* 处理上下左右平移移动视角（触屏）*/
+    HorVerMoveByTouch(arr: cc.Event.EventTouch[]) {
+
+        var point1 = arr[0].getLocation().add(arr[1].getLocation()).mul(0.5);
+        var point2 = arr[0].getPreviousLocation().add(arr[1].getPreviousLocation()).mul(0.5);
+        var dirVec2 = point1.sub(point2).mul(-0.0025);
+
+        var temp = this.QuatMulVec(this.rotation, new cc.Vec3(dirVec2.x, dirVec2.y));
+
+        this.cameraNode.setPosition(this.cameraPos.add(temp));
+        this.target.setPosition(this.targetPos.add(temp));
+
+        this.isTiaoJie = true;
     }
 
 
